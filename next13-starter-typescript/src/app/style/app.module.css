@@ -1,0 +1,6 @@
+.text {
+    text-decoration: none;
+    background-color: rgb(238, 218, 221);
+    border: 1px solid red;
+    color: blueviolet;
+}
