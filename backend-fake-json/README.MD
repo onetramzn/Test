@@ -3,8 +3,6 @@
 2. Chạy câu lệnh: npm i
 3. Chạy dự án: npm run dev
 
-#### `Lưu ý: Trong trường hợp xóa hết data (file db.json === empty), sử dụng file backup_db.json để lấy dữ liệu`
-
 &nbsp;
 
  ### `II.Các endpoint (apis) sử dụng:`
@@ -32,12 +30,3 @@ DELETE  /blogs/:id
 
 ví dụ: DELETE   /blogs/1
 ```
-
-### `III.Về Tác Giả`
-Đây là backend cho series Next.JS Cơ bản.  [Xem full tại đây](https://www.youtube.com/playlist?list=PLncHg6Kn2JT6zw4JiFOE1z90ghnyrFl5B)
-
-`Tác giả: Hỏi Dân IT`
-
-Facebook: https://facebook.com/askitwitheric
-
-Youtube: https://youtube.com/@hoidanit
