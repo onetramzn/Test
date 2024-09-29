@@ -1,5 +1,5 @@
 ## Các bước cài đặt:
-### 1 .chuột phải chọn Open Git Bash Here
+### 1 .chuột phải chọn Terminal
 ### 2 .gõ: git clone https://github.com/onetramzn/Test.git
 ## Đối với file next13-starter-typescript
 ### 1 .bấm chuột phải chọn Open to Terminal
