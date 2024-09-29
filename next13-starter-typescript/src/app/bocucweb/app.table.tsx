@@ -3,13 +3,39 @@ import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
 import CreateModal from './create.modal';
 import { useState } from 'react';
+import UpdateModal from './update.modal';
+import Link from 'next/link';
+import { toast } from 'react-toastify';
+import { mutate } from 'swr';
 
 interface Iprops {
   blogs: IBlog[]
 }
 const AppTable = (props: Iprops) => {
   const { blogs } = props;
+
+  const [blog, setBlog] = useState<IBlog | null>(null);
+  const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false)
   const [showModalCreate, setShowModalCreate] = useState<boolean>(false)
+
+  const handleDeleteBlog = (id: number) => {
+    if (confirm(`Bạn có chắc muốn xóa nhân viên này?(id=${id})`)) {
+      fetch(`http://localhost:8000/blogs/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+
+      }).then(res => res.json())
+        .then(res => {
+          if (res) {
+            toast.success("Xóa nhân viên thành công!")
+            mutate("http://localhost:8000/blogs")
+          }
+        });
+    }
+  }
 
   return (
     <>
@@ -17,7 +43,8 @@ const AppTable = (props: Iprops) => {
         className='mb-3'
         style={{ display: "flex", justifyContent: "space-between" }} >
         <h3 style={{ margin: "0 15px" }}>Danh sách nhân viên</h3>
-        <Button style={{ margin: "0 102px 0 0", backgroundColor: "#222627", marginBottom: "5px" }} variant="secondary"
+        <Button style={{ margin: "0 102px 0 0", backgroundColor: "#222627", marginBottom: "5px" }}
+          variant="secondary"
           onClick={() => setShowModalCreate(true)}
 
         >Thêm mới</Button>
@@ -34,18 +61,30 @@ const AppTable = (props: Iprops) => {
           </tr>
         </thead>
         <tbody>
-          {blogs?.map(blog => {
+          {blogs?.map(item => {
             return (
-              <tr key={blog.id}>
-                <td style={{ textAlign: "center" }}>{blog.id}</td>
-                <td>{blog.name}</td>
-                <td>{blog.username}</td>
-                <td>{blog.email}</td>
-                <td>{blog.phone}</td>
+              <tr key={item.id}>
+                <td style={{ textAlign: "center" }}>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.username}</td>
+                <td>{item.email}</td>
+                <td>{item.phone}</td>
                 <td style={{ textAlign: "center" }}>
-                  <Button>View</Button>
-                  <Button variant='warning' className='mx-3'>Edit</Button>
-                  <Button variant='danger'>Delete</Button>
+                  <Link href={`/admin/${item.id}`}
+                    className='btn btn-primary'>
+                    View
+                  </Link>
+                  <Button variant='warning' className='mx-3'
+                    onClick={() => {
+                      setBlog(item);
+                      setShowModalUpdate(true);
+                    }}
+
+                  >Edit</Button>
+                  <Button variant='danger'
+                    onClick={() => handleDeleteBlog(item.id)}
+
+                  >Delete</Button>
 
                 </td>
 
@@ -57,6 +96,12 @@ const AppTable = (props: Iprops) => {
       <CreateModal
         showModalCreate={showModalCreate}
         setShowModalCreate={setShowModalCreate}
+      />
+      <UpdateModal
+        showModalUpdate={showModalUpdate}
+        setShowModalUpdate={setShowModalUpdate}
+        blog={blog}
+        setBlog={setBlog}
       />
     </>
   );

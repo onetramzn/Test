@@ -1,51 +1,69 @@
 'use client'
+import { useState } from 'react';
 import Link from "next/link";
 import style from '@/app/style/app.module.css';
-import { useEffect } from "react";
-import useSWR from "swr";
-import AppTable from "./bocucweb/app.table";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Trang Chủ',
+  description: 'Tìm kiếm thông tin nhân viên',
+}
+
+interface IEmployee {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+}
 
 export default function Home() {
-  const fetcher = (url: string) => fetch(url)
-    .then((res) => res.json());
+  const [name, setName] = useState<string>('');
+  const [employee, setEmployee] = useState<IEmployee | null>(null);
 
-  const { data, error, isLoading } = useSWR(
-    "http://localhost:8000/blogs",
-    fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false
-    }
-  );
-  if (!data) {
-    return <div>loading...</div>
-  }
+  const handleSearch = () => {
+
+    fetch(`http://localhost:8000/blogs?name=${name}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.length > 0) {
+          setEmployee(data[0]);
+        } else {
+          setEmployee(null);
+          alert('Không tìm thấy nhân viên!');
+        }
+      });
+  };
 
   return (
-    <div>
-      <div>{data?.length}</div>
-      <ul >
-        <li className={style.text}>
-          <Link href={"/facebook"}>
-            Facebook
-          </Link>
-        </li>
-        <li>
-          <Link href={"/youtube"}>
-            Youtube
-          </Link>
-        </li>
-        <li>
-          <Link href={"/tiktok"}>
-            Tiktok
-          </Link>
-        </li>
-      </ul>
-      <AppTable
-        blogs={data?.sort((a: any, b: any) => b.id - a.id)}
-      />
+    <div className={style.centeredContainer}>
+      <div className={style.searchBox}>
+        <h1>Tìm kiếm nhân viên</h1>
+        <input
+          type="text"
+          placeholder="Nhập tên nhân viên"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={style.inputField}
+        />
+        <button
+          onClick={handleSearch}
+          className={style.searchButton}
+        >
+          Tìm kiếm
+        </button>
+      </div>
+
+      {/* Hiển thị thông tin nhân viên nếu tìm thấy */}
+      {employee && (
+        <div className={style.employeeInfo}>
+          <h3>Thông tin nhân viên:</h3>
+          <p><strong>Tên:</strong> {employee.name}</p>
+          <p><strong>Họ:</strong> {employee.username}</p>
+          <p><strong>Email:</strong> {employee.email}</p>
+          <p><strong>Số điện thoại:</strong> {employee.phone}</p>
+        </div>
+      )}
     </div>
   );
 }
-

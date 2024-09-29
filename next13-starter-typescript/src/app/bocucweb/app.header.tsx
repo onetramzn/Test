@@ -11,22 +11,15 @@ const AppHeader = () => {
             <Container>
                 <Navbar.Brand >
                     <Link href={"/"} className="navbar-brand">
-                        Nguyễn Đình Nhất
+                        Trang chủ
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Link href={"/facebook"} className='nav-link'>
-                            Facebook
+                    <Nav className="navbar-brand">
+                        <Link href={"/admin"} className='nav-link'>
+                            Admin
                         </Link>
-                        <Link href={"/youtube"} className='nav-link'>
-                            Youtuble
-                        </Link>
-                        <Link href={"/tiktok"} className='nav-link'>
-                            Tiktok
-                        </Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
