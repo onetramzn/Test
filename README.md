@@ -13,5 +13,5 @@
 ### 5 .bấm chuột phải chọn Open to Terminal
 ### 6 .gõ lệnh cd .\backend-fake-json\
 ### 7 .gõ lệnh code . để mở dự án
-### 8 .khi vào dự án mở terminal gõ: nnpm i
+### 8 .khi vào dự án mở terminal gõ: npm i
 ###                                : npm run dev
