@@ -5,7 +5,7 @@
 ## Đối với file next13-starter-typescript
 ### 1 .cài đặt thư viện: npm i
 ### 2 .chạy project:npm run dev
-### Đối với file Backend
+## Đối với file Backend
 ### 1 .vào thư mục backend-fake-json
 ### 5 .bấm chuột phải chọn Open to Terminal
 ### 6 .Gõ lệnh npm run dev
